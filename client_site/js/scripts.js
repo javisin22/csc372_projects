@@ -6,13 +6,13 @@
 const mainHeader = document.querySelector('h1');
 
 // Select the introductory paragraph right after the main header.
-const introParagraph = document.querySelector('.content > p');
+// The ">" selects the direct <p> childs of ".content". It's only returning the first <p> because querySelector() returns the first match.
+const introParagraph = document.querySelector('.content > p'); 
 
 // Select the first button in the ".content" div (the "Get Started" button).
 const getStartedButton = document.querySelector('.content > button');
 
 // Select the unordered list in the first <section> that shows "Client's Goals".
-// (Make sure it is the one intended for visible updates.)
 const clientsGoalsList = document.querySelector('section ul');
 
 // ================================
