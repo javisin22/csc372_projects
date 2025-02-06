@@ -1,0 +1,106 @@
+body {
+    background-color: #f0f7ff;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+nav a:hover {
+    color: #0078d4;
+    transform: scale(1.1);
+}
+
+nav a:active {
+    color: #005a9e;
+    transform: scale(0.95);
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 2.5em;
+    font-weight: bolder;
+    color: #333;
+}
+
+p {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2em;
+    color: #333;
+}
+
+img {
+    width: 150px;
+    height: 150px;
+    float: left;
+    margin-right: 20px;
+}
+
+section {
+    margin-bottom: 100px;
+}
+
+.content {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* For screens 768px or smaller */
+@media screen and (max-width: 768px) {
+    /* Stack header content vertically and center-align */
+    header {
+        display: block;
+        text-align: center;
+        padding: 10px;
+    }
+
+    #header-container {
+        display: block;
+    }
+
+    nav ul {
+        padding: 0;
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    nav li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    /* Make the content box wider on small screens */
+    .content {
+        width: 90%;
+        padding: 15px;
+    }
+
+    /* Scale images to fit the container width, and remove float */
+    img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        float: none;
+        margin: 0 auto 20px auto;
+        display: block;
+    }
+}
+
+/* For very small screens (480px or smaller) */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+    }
+    p {
+        font-size: 1em;
+    }
+    nav li {
+        display: block;
+        margin: 5px 0;
+    }
+}
