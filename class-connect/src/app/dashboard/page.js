@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Button from "@/components/Button";
+import CalendarPage from "@/components/CalendarPage";
+import CalendarPreview from "@/components/CalendarPreview";
 
 export default function StudentDashboard() {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -34,24 +36,22 @@ export default function StudentDashboard() {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar - width is toggled */}
+      {/* Sidebar */}
       <div
         className={`transition-all duration-300 overflow-hidden bg-white shadow flex flex-col ${
           sidebarActive ? "w-[300px]" : "w-0"
         }`}
       >
-        {/* Sidebar Header */}
         <Link href="/" className="p-4 border-b">
-            <div className="flex items-center">
-                <img
-                src="logo_ClassConnect_transparent.png"
-                alt="ClassConnect Logo"
-                className="w-32 h-auto rounded-full mr-3"
-                />
-                <p className="font-semibold text-lg">ClassConnect</p>
-            </div>                      
-        </Link>      
-        {/* Sidebar Content */}
+          <div className="flex items-center">
+            <img
+              src="logo_ClassConnect_transparent.png"
+              alt="ClassConnect Logo"
+              className="w-32 h-auto rounded-full mr-3"
+            />
+            <p className="font-semibold text-lg">ClassConnect</p>
+          </div>
+        </Link>
         <div className="flex-1 overflow-y-auto">
           <div className="p-4">
             <ul className="space-y-2">
@@ -77,7 +77,6 @@ export default function StudentDashboard() {
       <main className="flex-1 overflow-y-auto p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{activePage}</h1>
-          {/* Sidebar toggle button */}
           <button
             onClick={() => setSidebarActive(!sidebarActive)}
             className="hover:text-gray-500"
@@ -91,7 +90,9 @@ export default function StudentDashboard() {
         </div>
 
         {activePage === "Dashboard" ? (
-          <DashboardContent />
+          <DashboardContent onCalendarClick={() => setActivePage("Calendar")} />
+        ) : activePage === "Calendar" ? (
+          <CalendarPage />
         ) : (
           <PlaceholderContent page={activePage} />
         )}
@@ -100,7 +101,7 @@ export default function StudentDashboard() {
   );
 }
 
-function DashboardContent() {
+function DashboardContent({ onCalendarClick }) {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {/* Upcoming Classes Card */}
@@ -129,29 +130,14 @@ function DashboardContent() {
         </div>
       </div>
 
-      {/* Quick Actions Card */}
-      <div className="bg-white shadow rounded">
-        <div className="p-4">
-          <h3 className="text-xl font-semibold">Quick Actions</h3>
-        </div>
-        <div className="p-4 flex flex-col space-y-2">
-          <Button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Book a Class
-          </Button>
-          <Button className="border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-100">
-            View Upcoming Sessions
-          </Button>
-        </div>
-      </div>
-
-      {/* Calendar Card */}
+      {/* Calendar Preview Card */}
       <div className="bg-white shadow rounded md:col-span-2">
         <div className="p-4 border-b">
-          <h3 className="text-xl font-semibold">Calendar</h3>
-          <p className="text-gray-600">Your upcoming schedule</p>
+          <h3 className="text-xl font-semibold">Calendar Overview</h3>
+          <p className="text-gray-600">Click to see full calendar and book appointments</p>
         </div>
         <div className="p-4">
-          <p className="text-center py-8">Calendar placeholder</p>
+          <CalendarPreview onClick={onCalendarClick} />
         </div>
       </div>
 
