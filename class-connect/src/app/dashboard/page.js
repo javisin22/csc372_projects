@@ -38,8 +38,8 @@ export default function StudentDashboard() {
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <div
-        className={`transition-all duration-300 overflow-hidden bg-white shadow flex flex-col ${
-          sidebarActive ? "w-[300px]" : "w-0"
+        className={`transition-all duration-150 ease-in-out overflow-hidden bg-white shadow flex flex-col ${
+          sidebarActive ? "w-[300px] opacity-100" : "w-0 opacity-0"
         }`}
       >
         <Link href="/" className="p-4 border-b">
@@ -92,7 +92,7 @@ export default function StudentDashboard() {
         {activePage === "Dashboard" ? (
           <DashboardContent onCalendarClick={() => setActivePage("Calendar")} />
         ) : activePage === "Calendar" ? (
-          <CalendarPage />
+          <CalendarPage sidebarActive={sidebarActive} />
         ) : (
           <PlaceholderContent page={activePage} />
         )}
