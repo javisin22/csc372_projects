@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   Calendar,
   MessageCircle,
@@ -13,21 +14,21 @@ import {
   ArrowLeftToLine,
   ArrowRightToLine,
 } from "lucide-react";
-import Link from "next/link";
-import Button from "@/components/Button";
-import CalendarPage from "@/components/CalendarPage";
-import CalendarPreview from "@/components/CalendarPreview";
 
-export default function StudentDashboard() {
+import DashboardPage from "@/components/DashboardPage";
+import CalendarPage from "@/components/CalendarPage";
+import ChatPage from "@/components/ChatPage";
+
+export default function Dashboard() {
   const [activePage, setActivePage] = useState("Dashboard");
   const [sidebarActive, setSidebarActive] = useState(true);
 
   const menuItems = [
-    { name: "Dashboard", icon: <Bell className="mr-2 h-4 w-4" /> },
-    { name: "Calendar", icon: <Calendar className="mr-2 h-4 w-4" /> },
+    { name: "Dashboard", icon: <Bell className="mr-2 h-4 w-4" />, content: <DashboardPage /> },
+    { name: "Calendar", icon: <Calendar className="mr-2 h-4 w-4" />, content: <CalendarPage /> },
     { name: "Appointments", icon: <Calendar className="mr-2 h-4 w-4" /> },
     { name: "Payment", icon: <CreditCard className="mr-2 h-4 w-4" /> },
-    { name: "Chat", icon: <MessageCircle className="mr-2 h-4 w-4" /> },
+    { name: "Chat", icon: <MessageCircle className="mr-2 h-4 w-4" />, content: <ChatPage /> },
     { name: "Profile", icon: <User className="mr-2 h-4 w-4" /> },
     { name: "Feedback", icon: <Star className="mr-2 h-4 w-4" /> },
     { name: "Resources", icon: <BookOpen className="mr-2 h-4 w-4" /> },
@@ -74,7 +75,7 @@ export default function StudentDashboard() {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto p-8">
+      <main className="flex-1 p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{activePage}</h1>
           <button
@@ -89,10 +90,15 @@ export default function StudentDashboard() {
           </button>
         </div>
 
+        {/* If activePage.content != '', render activePage.content, else render PlaceholderContent.
+          Change this when all sections have a SectionPage (now only Dashboard, Calendar and Chat have one).
+          Maybe it's a little bit messy as each Page might have different props being passed to it. */ }
         {activePage === "Dashboard" ? (
-          <DashboardContent onCalendarClick={() => setActivePage("Calendar")} />
+          <DashboardPage onCalendarClick={() => setActivePage("Calendar")} />
         ) : activePage === "Calendar" ? (
-          <CalendarPage sidebarActive={sidebarActive} />
+          <CalendarPage/>
+        ) : activePage === "Chat" ? (
+          <ChatPage/>
         ) : (
           <PlaceholderContent page={activePage} />
         )}
@@ -101,61 +107,6 @@ export default function StudentDashboard() {
   );
 }
 
-function DashboardContent({ onCalendarClick }) {
-  return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {/* Upcoming Classes Card */}
-      <div className="bg-white shadow rounded">
-        <div className="px-4 pt-4">
-          <h3 className="text-xl font-semibold">Upcoming Classes</h3>
-        </div>
-        <div className="p-4">
-          <p className="mb-4">You have 2 classes scheduled this week.</p>
-          <Button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            View Schedule
-          </Button>
-        </div>
-      </div>
-
-      {/* Notifications Card */}
-      <div className="bg-white shadow rounded">
-        <div className="px-4 pt-4">
-          <h3 className="text-xl font-semibold">Notifications</h3>
-        </div>
-        <div className="p-4">
-          <p className="mb-4">You have 3 new notifications.</p>
-          <Button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            View All
-          </Button>
-        </div>
-      </div>
-
-      {/* Calendar Preview Card */}
-      <div className="bg-white shadow rounded md:col-span-2">
-        <div className="p-4 border-b">
-          <h3 className="text-xl font-semibold">Calendar Overview</h3>
-          <p className="text-gray-600">Click to see full calendar and book appointments</p>
-        </div>
-        <div className="p-4">
-          <CalendarPreview onClick={onCalendarClick} />
-        </div>
-      </div>
-
-      {/* Recent Chats Card */}
-      <div className="bg-white shadow rounded">
-        <div className="p-4">
-          <h3 className="text-xl font-semibold">Recent Chats</h3>
-        </div>
-        <div className="p-4">
-          <p className="mb-4">You have 2 unread messages.</p>
-          <Button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Open Chat
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function PlaceholderContent({ page }) {
   return (

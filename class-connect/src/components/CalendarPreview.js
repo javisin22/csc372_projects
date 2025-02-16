@@ -7,22 +7,8 @@ import { useState } from 'react';
 
 export default function CalendarPreview({ onClick }) {
   const [events, setEvents] = useState([
-    // Sample events
+    // Retrieve events from API when available
   ]);
-
-  // Optional: keep the select handler if you want interaction in preview mode.
-  const handleSelect = (selectInfo) => {
-    const title = prompt("Enter appointment title:");
-    if (title) {
-      const newEvent = {
-        id: Date.now().toString(),
-        title,
-        start: selectInfo.start,
-        end: selectInfo.end,
-      };
-      setEvents([...events, newEvent]);
-    }
-  };
 
   return (
     <div onClick={onClick} className="cursor-pointer">

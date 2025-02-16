@@ -8,7 +8,7 @@ import { useState, useRef, useEffect } from "react";
 import AppointmentModal from "./AppointmentModal";
 import DeleteModal from "./DeleteModal";
 
-export default function CalendarPage({ sidebarActive }) {
+export default function CalendarPage() {
   const [events, setEvents] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null); // "create", "edit", "delete"
@@ -19,7 +19,7 @@ export default function CalendarPage({ sidebarActive }) {
   const containerRef = useRef(null);
   const calendarRef = useRef(null);
 
-  // Use a ResizeObserver to trigger a resize on the calendar when container changes.
+  // Use a ResizeObserver to trigger a resize on the calendar when container changes
   useEffect(() => {
     if (!containerRef.current || !calendarRef.current) return;
     const observer = new ResizeObserver(() => {
@@ -29,21 +29,21 @@ export default function CalendarPage({ sidebarActive }) {
     return () => observer.disconnect();
   }, []);
 
-  // When a date range is selected, open the modal to create a new event.
+  // When a date range is selected, open the modal to create a new event
   const handleSelect = (selectInfo) => {
     setSelectedRange(selectInfo);
     setModalType("create");
     setModalOpen(true);
   };
 
-  // Left-click: open modal for editing event title.
+  // Left-click: open modal for editing event title
   const handleEventClick = (clickInfo) => {
     setSelectedEvent(clickInfo.event);
     setModalType("edit");
     setModalOpen(true);
   };
 
-  // Right-click: open modal for deletion confirmation.
+  // Right-click: open modal for deletion confirmation
   const handleEventDidMount = (info) => {
     info.el.addEventListener("contextmenu", (e) => {
       e.preventDefault();
@@ -53,7 +53,7 @@ export default function CalendarPage({ sidebarActive }) {
     });
   };
 
-  // Handler for the create/edit modal confirmation.
+  // Handler for the create/edit modal confirmation
   const handleModalConfirm = (title) => {
     if (modalType === "create" && selectedRange) {
       const newEvent = {
@@ -74,7 +74,7 @@ export default function CalendarPage({ sidebarActive }) {
     closeModal();
   };
 
-  // Handler for deletion confirmation modal.
+  // Handler for deletion confirmation modal
   const handleDeleteConfirm = () => {
     if (selectedEvent) {
       setEvents((prevEvents) =>
