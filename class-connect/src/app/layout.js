@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,21 @@ export default function RootLayout({ children }) {
         </main>
 
         <Footer />
+
+        {/* jQuery import for Assignment 4 */}
+        <Script
+          src="https://code.jquery.com/jquery-3.7.1.js" 
+          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+          crossorigin="anonymous"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          id="jQuery-fallback"
+          strategy="afterInteractive"
+        >
+          {`if (!window.jQuery) { document.write('<script src="/js/jquery-3.7.1.min.js"><\\/script>'); }`}
+        </Script>
+        {/* <Script src="js/jQuery-script.js"></Script> */}
       </body>
     </html>
   );

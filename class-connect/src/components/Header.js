@@ -14,7 +14,7 @@ export default function Header() {
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center">
             <img
-              src="logo_ClassConnect_transparent.png"
+              src="logo_ClassConnect_transparent.webp"
               alt="ClassConnect Logo"
               className="w-48 h-auto max-w-full object-contain"
             />
