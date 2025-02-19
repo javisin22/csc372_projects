@@ -3,8 +3,8 @@
 import Link from "next/link";
 import Button from "@/components/Button";
 import FeatureCard from "@/components/FeatureCard";
+import ContactForm from "@/components/ContactForm";
 import { Calendar, MessageCircle, CreditCard, BookOpen, ArrowUp } from "lucide-react";
-import { useState } from "react";
 
 export default function Home() {
   return (
@@ -160,67 +160,67 @@ export default function Home() {
 }
 
 // Function to process the form submission and open the user's email client
-function ContactForm() {
-  const [sender, setSender] = useState("");
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
+// function ContactForm() {
+//   const [sender, setSender] = useState("");
+//   const [name, setName] = useState("");
+//   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`${name} doubt`);
-    const body = encodeURIComponent(`Sender: ${sender}\n\nMessage:\n${message}`);
-    window.location.href = `mailto:javier.sinpelayo@uri.edu?subject=${subject}&body=${body}`;
-  };
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     const subject = encodeURIComponent(`${name} doubt`);
+//     const body = encodeURIComponent(`Sender: ${sender}\n\nMessage:\n${message}`);
+//     window.location.href = `mailto:javier.sinpelayo@uri.edu?subject=${subject}&body=${body}`;
+//   };
 
-  return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name" className="block text-lg font-medium text-gray-700">
-          Name
-        </label>
-        <input
-          id="name"
-          type="text"
-          placeholder="Your Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="senderEmail" className="block text-lg font-medium text-gray-700">
-          Email
-        </label>
-        <input
-          id="senderEmail"
-          type="email"
-          placeholder="Your Email"
-          value={sender}
-          onChange={(e) => setSender(e.target.value)}
-          className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="message" className="block text-lg font-medium text-gray-700">
-          Message
-        </label>
-        <textarea
-          id="message"
-          placeholder="Your Message"
-          rows="4"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-          required
-        />
-      </div>
-      <div className="text-center">
-        <Button type="submit" background="login">
-          Send Message
-        </Button>
-      </div>
-    </form>
-  );
-}
+//   return (
+//     <form className="space-y-4" onSubmit={handleSubmit}>
+//       <div>
+//         <label htmlFor="name" className="block text-lg font-medium text-gray-700">
+//           Name
+//         </label>
+//         <input
+//           id="name"
+//           type="text"
+//           placeholder="Your Name"
+//           value={name}
+//           onChange={(e) => setName(e.target.value)}
+//           className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+//           required
+//         />
+//       </div>
+//       <div>
+//         <label htmlFor="senderEmail" className="block text-lg font-medium text-gray-700">
+//           Email
+//         </label>
+//         <input
+//           id="senderEmail"
+//           type="email"
+//           placeholder="Your Email"
+//           value={sender}
+//           onChange={(e) => setSender(e.target.value)}
+//           className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+//           required
+//         />
+//       </div>
+//       <div>
+//         <label htmlFor="message" className="block text-lg font-medium text-gray-700">
+//           Message
+//         </label>
+//         <textarea
+//           id="message"
+//           placeholder="Your Message"
+//           rows="4"
+//           value={message}
+//           onChange={(e) => setMessage(e.target.value)}
+//           className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+//           required
+//         />
+//       </div>
+//       <div className="text-center">
+//         <Button type="submit" background="login">
+//           Send Message
+//         </Button>
+//       </div>
+//     </form>
+//   );
+// }
