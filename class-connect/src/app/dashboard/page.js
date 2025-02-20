@@ -54,6 +54,18 @@ export default function Dashboard() {
     Support: <SupportPage />,
   };
 
+  // Hide body scrollbar when Dashboard mounts
+  useEffect(() => {
+  if (window.jQuery) {
+    const $body = window.jQuery("body"); // Cache the selection
+    $body.css("overflow", "hidden"); // Prevent body from scrolling
+    return () => {
+      $body.css("overflow", ""); // Reset to default when unmounting component
+    };
+  }
+  }, []);
+
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar: fixed position so transform applies on all screens */}
@@ -97,7 +109,7 @@ export default function Dashboard() {
       <main
         className={`flex-1 p-8 transition-all duration-300 ease-in-out 
           ${ sidebarActive ? "md:ml-[300px]" : "md:ml-0"} 
-          ${activePage === "Chat" ? "overflow-y-auto" : "overflow-y-hidden"}`}
+          ${(activePage === "Chat" || activePage === "Profile" ) ? "overflow-y-auto" : "overflow-y-hidden"}`}
       >
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{activePage}</h1>
