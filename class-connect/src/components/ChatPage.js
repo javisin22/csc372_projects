@@ -11,6 +11,7 @@ export default function ChatPage() {
     { id: 3, name: "Tutor Juan" },
   ];
   const [selectedTutor, setSelectedTutor] = useState(tutors[0]);
+  const [firstLoad, setFirstLoad] = useState(true);
 
   // Sample messages for the selected tutor
   const [messages, setMessages] = useState([

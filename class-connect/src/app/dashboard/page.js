@@ -15,9 +15,16 @@ import {
   ArrowRightToLine,
 } from "lucide-react";
 
+// Dedicated pages
 import DashboardPage from "@/components/DashboardPage";
 import CalendarPage from "@/components/CalendarPage";
+import AppointmentsPage from "@/components/AppointmentsPage";
+import PaymentPage from "@/components/PaymentPage";
 import ChatPage from "@/components/ChatPage";
+import ProfilePage from "@/components/ProfilePage";
+import FeedbackPage from "@/components/FeedbackPage";
+import ResourcesPage from "@/components/ResourcesPage";
+import SupportPage from "@/components/SupportPage";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -34,6 +41,19 @@ export default function Dashboard() {
     { name: "Resources", icon: <BookOpen className="mr-2 h-4 w-4" /> },
     { name: "Support", icon: <HelpCircle className="mr-2 h-4 w-4" /> },
   ];
+
+  const pageComponents = {
+    Dashboard: <DashboardPage onCalendarClick={() => setActivePage("Calendar")} />,
+    Calendar: <CalendarPage sidebarActive={sidebarActive} />,
+    Appointments: <AppointmentsPage />,
+    Payment: <PaymentPage />,
+    Chat: <ChatPage />,
+    Profile: <ProfilePage />,
+    Feedback: <FeedbackPage />,
+    Resources: <ResourcesPage />,
+    Support: <SupportPage />,
+  };
+
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -75,7 +95,11 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 p-8">
+      <main
+        className={`flex-1 p-8 ${
+          activePage === "Chat" ? "overflow-y-auto" : "overflow-y-hidden"
+        }`}
+      >
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{activePage}</h1>
           <button
@@ -90,18 +114,8 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* If activePage.content != '', render activePage.content, else render PlaceholderContent.
-          Change this when all sections have a SectionPage (now only Dashboard, Calendar and Chat have one).
-          Maybe it's a little bit messy as each Page might have different props being passed to it. */ }
-        {activePage === "Dashboard" ? (
-          <DashboardPage onCalendarClick={() => setActivePage("Calendar")} />
-        ) : activePage === "Calendar" ? (
-          <CalendarPage/>
-        ) : activePage === "Chat" ? (
-          <ChatPage/>
-        ) : (
-          <PlaceholderContent page={activePage} />
-        )}
+        {/* Render the dedicated page based on activePage */}
+        {pageComponents[activePage] || null}
       </main>
     </div>
   );
