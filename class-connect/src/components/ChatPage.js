@@ -23,9 +23,9 @@ export default function ChatPage() {
   const messagesEndRef = useRef(null);
 
   // Scroll to bottom whenever messages change
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  // useEffect(() => {
+  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [messages]);
 
   const sendMessage = () => {
     if (!inputMessage.trim()) return;

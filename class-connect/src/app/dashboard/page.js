@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Calendar,
@@ -31,11 +31,11 @@ export default function Dashboard() {
   const [sidebarActive, setSidebarActive] = useState(true);
 
   const menuItems = [
-    { name: "Dashboard", icon: <Bell className="mr-2 h-4 w-4" />, content: <DashboardPage /> },
-    { name: "Calendar", icon: <Calendar className="mr-2 h-4 w-4" />, content: <CalendarPage /> },
+    { name: "Dashboard", icon: <Bell className="mr-2 h-4 w-4" /> },
+    { name: "Calendar", icon: <Calendar className="mr-2 h-4 w-4" /> },
     { name: "Appointments", icon: <Calendar className="mr-2 h-4 w-4" /> },
     { name: "Payment", icon: <CreditCard className="mr-2 h-4 w-4" /> },
-    { name: "Chat", icon: <MessageCircle className="mr-2 h-4 w-4" />, content: <ChatPage /> },
+    { name: "Chat", icon: <MessageCircle className="mr-2 h-4 w-4" /> },
     { name: "Profile", icon: <User className="mr-2 h-4 w-4" /> },
     { name: "Feedback", icon: <Star className="mr-2 h-4 w-4" /> },
     { name: "Resources", icon: <BookOpen className="mr-2 h-4 w-4" /> },
@@ -54,14 +54,13 @@ export default function Dashboard() {
     Support: <SupportPage />,
   };
 
-
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
+      {/* Sidebar: fixed position so transform applies on all screens */}
       <div
-        className={`transition-all duration-150 ease-in-out overflow-hidden bg-white shadow flex flex-col ${
-          sidebarActive ? "w-[300px] opacity-100" : "w-0 opacity-0"
-        }`}
+        className={`fixed inset-y-0 left-0 transform transition-transform duration-300 ease-in-out z-50
+          ${sidebarActive ? "translate-x-0" : "-translate-x-full"}
+          w-[300px] p-4 bg-white shadow`}
       >
         <Link href="/" className="p-4 border-b">
           <div className="flex items-center">
@@ -96,9 +95,9 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main
-        className={`flex-1 p-8 ${
-          activePage === "Chat" ? "overflow-y-auto" : "overflow-y-hidden"
-        }`}
+        className={`flex-1 p-8 transition-all duration-300 ease-in-out 
+          ${ sidebarActive ? "md:ml-[300px]" : "md:ml-0"} 
+          ${activePage === "Chat" ? "overflow-y-auto" : "overflow-y-hidden"}`}
       >
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{activePage}</h1>
@@ -114,26 +113,8 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Render the dedicated page based on activePage */}
         {pageComponents[activePage] || null}
       </main>
-    </div>
-  );
-}
-
-
-function PlaceholderContent({ page }) {
-  return (
-    <div className="bg-white shadow rounded">
-      <div className="p-4 border-b">
-        <h3 className="text-xl font-semibold">{page} Content</h3>
-        <p className="text-gray-600">
-          This is a placeholder for the {page} page content.
-        </p>
-      </div>
-      <div className="p-4">
-        <p>Content for {page} will be implemented here.</p>
-      </div>
     </div>
   );
 }
