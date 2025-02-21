@@ -109,7 +109,7 @@ export default function Dashboard() {
       <main
         className={`flex-1 p-8 transition-all duration-300 ease-in-out 
           ${ sidebarActive ? "md:ml-[300px]" : "md:ml-0"} 
-          ${(activePage === "Chat" || activePage === "Profile" ) ? "overflow-y-auto" : "overflow-y-hidden"}`}
+          ${(activePage === "Chat" || activePage === "Profile" || activePage === "Calendar" ) ? "overflow-y-auto" : "overflow-y-hidden"}`}
       >
         <div
           id="page-header"
