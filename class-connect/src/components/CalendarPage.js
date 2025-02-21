@@ -14,8 +14,9 @@ export default function CalendarPage() {
   const [modalType, setModalType] = useState(null); // "create", "edit", "delete"
   const [selectedRange, setSelectedRange] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [currentView, setCurrentView] = useState("timeGridWeek");
 
-  // Create a ref for the calendar container and instance
+  // Create refs for container and calendar instance
   const containerRef = useRef(null);
   const calendarRef = useRef(null);
 
@@ -28,6 +29,41 @@ export default function CalendarPage() {
     observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, []);
+
+  // Window resize handler for adjusting current view
+  useEffect(() => {
+    const handleResize = () => {
+      const fcHeaderToolbar = window.jQuery(".fc-header-toolbar");
+      if (window.innerWidth < 768) {
+        setCurrentView("timeGridDay");
+        // set the padding for "main" to 0 using jQuery
+        if (window.jQuery) {
+          window.jQuery("main").css("padding", "0");
+          window.jQuery("#page-header").css("padding", "32px");
+          fcHeaderToolbar.css("padding", "0.5rem 0.75rem");
+          fcHeaderToolbar.css("font-size", "0.875rem");          
+        }        
+      } else {
+        setCurrentView("timeGridWeek");
+        if (window.jQuery) {
+          window.jQuery("main").css("padding", "");
+          window.jQuery("#page-header").css("padding", "");
+          fcHeaderToolbar.css("padding", "");
+          fcHeaderToolbar.css("font-size", "");
+        }
+      }
+    };
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // When currentView state changes, update the calendar view using the API
+  useEffect(() => {
+    if (calendarRef.current) {
+      calendarRef.current.getApi().changeView(currentView);
+    }
+  }, [currentView]);
 
   // When a date range is selected, open the modal to create a new event
   const handleSelect = (selectInfo) => {
@@ -85,7 +121,6 @@ export default function CalendarPage() {
   };
 
   const handleEventResize = (resizeInfo) => {
-    // Update the event's start and end times in state
     const resizedEvent = resizeInfo.event;
     setEvents((prevEvents) =>
       prevEvents.map((evt) =>
@@ -104,15 +139,16 @@ export default function CalendarPage() {
   };
 
   return (
-    <div ref={containerRef} className="p-4">
+    <div ref={containerRef} className="min-h-screen overflow-y-auto">
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="timeGridWeek"
-        selectable={true} // Allow date range selection
-        selectMirror={true} // Create a mirror when dragging an event
-        editable={true} // Enable event dragging/resizing
-        eventResizableFromStart={false} // Allow resizing only from the bottom edge
+        initialView={currentView}
+        height={currentView === "timeGridDay" ? "100vh" : "auto"}
+        selectable={true}
+        selectMirror={true}
+        editable={true}
+        eventResizableFromStart={false}
         select={handleSelect}
         events={events}
         eventClick={handleEventClick}

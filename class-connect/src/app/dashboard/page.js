@@ -43,7 +43,7 @@ export default function Dashboard() {
   ];
 
   const pageComponents = {
-    Dashboard: <DashboardPage onCalendarClick={() => setActivePage("Calendar")} />,
+    Dashboard: <DashboardPage setActivePage={setActivePage} />,
     Calendar: <CalendarPage sidebarActive={sidebarActive} />,
     Appointments: <AppointmentsPage />,
     Payment: <PaymentPage />,
@@ -111,7 +111,10 @@ export default function Dashboard() {
           ${ sidebarActive ? "md:ml-[300px]" : "md:ml-0"} 
           ${(activePage === "Chat" || activePage === "Profile" ) ? "overflow-y-auto" : "overflow-y-hidden"}`}
       >
-        <div className="flex justify-between items-center mb-6">
+        <div
+          id="page-header"
+          className="flex justify-between items-center mb-6"
+        >
           <h1 className="text-3xl font-bold">{activePage}</h1>
           <button
             onClick={() => setSidebarActive(!sidebarActive)}
