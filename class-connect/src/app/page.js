@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Button from "@/components/Button";
 import FeatureCard from "@/components/FeatureCard";
-import ContactForm from "@/components/ContactForm";
+import AnimatedContactForm from "@/components/AnimatedContactForm";
 import { Calendar, MessageCircle, CreditCard, BookOpen, ArrowUp } from "lucide-react";
 
 export default function Home() {
@@ -152,7 +152,7 @@ export default function Home() {
           Have questions or need support? Get in touch with us for more information about our tutoring services.
         </p>
         <div className="mt-8 max-w-md mx-auto">
-          <ContactForm />
+          <AnimatedContactForm />
         </div>
       </div>
     </div>

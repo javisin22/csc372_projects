@@ -1,25 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function ContactForm() {
     const [sender, setSender] = useState("");
     const [name, setName] = useState("");
     const [message, setMessage] = useState("");
-
-    // This code will run automatically when the component mounts. It will only run on the client.
-    // This is where the jQuery code is added to show the form when the button is clicked.    
-    useEffect(() => {
-        // Ensure jQuery is available on the client
-        if (typeof window !== "undefined" && window.$) {
-        // selection of the button by its id
-        window.$("#show-contact").click(function () { // When the button is clicked
-            $(this).fadeOut(300, function () { // Fade out the button
-            $("#contact-form-container").slideDown(300); // Slide down the form container
-            });
-        });
-        }
-    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,78 +16,57 @@ export default function ContactForm() {
     };
 
     return (
+        <form className="space-y-4 mt-4" onSubmit={handleSubmit}>
         <div>
-        {/* Initially show the button */}
-        <button
-            id="show-contact"
+            <label htmlFor="name" className="block text-lg font-medium text-gray-700">
+            Name
+            </label>
+            <input
+            id="name"
+            type="text"
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+            required
+            />
+        </div>
+        <div>
+            <label htmlFor="senderEmail" className="block text-lg font-medium text-gray-700">
+            Email
+            </label>
+            <input
+            id="senderEmail"
+            type="email"
+            placeholder="Your Email"
+            value={sender}
+            onChange={(e) => setSender(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+            required
+            />
+        </div>
+        <div>
+            <label htmlFor="message" className="block text-lg font-medium text-gray-700">
+            Message
+            </label>
+            <textarea
+            id="message"
+            placeholder="Your Message"
+            rows="4"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+            required
+            />
+        </div>
+        <div className="text-center">
+            <button
+            type="submit"
             className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring"
-        >
-            Show Contact Form
-        </button>
-        {/* Hidden form container */}
-        <div id="contact-form-container" style={{ display: "none" }}>
-            <form className="space-y-4 mt-4" onSubmit={handleSubmit}>
-            <div>
-                <label
-                htmlFor="name"
-                className="block text-lg font-medium text-gray-700"
-                >
-                Name
-                </label>
-                <input
-                id="name"
-                type="text"
-                placeholder="Your Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                required
-                />
-            </div>
-            <div>
-                <label
-                htmlFor="senderEmail"
-                className="block text-lg font-medium text-gray-700"
-                >
-                Email
-                </label>
-                <input
-                id="senderEmail"
-                type="email"
-                placeholder="Your Email"
-                value={sender}
-                onChange={(e) => setSender(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                required
-                />
-            </div>
-            <div>
-                <label
-                htmlFor="message"
-                className="block text-lg font-medium text-gray-700"
-                >
-                Message
-                </label>
-                <textarea
-                id="message"
-                placeholder="Your Message"
-                rows="4"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                required
-                />
-            </div>
-            <div className="text-center">
-                <button
-                type="submit"
-                className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring"
-                >
-                Send Message
-                </button>
-            </div>
-            </form>
+            >
+            Send Message
+            </button>
         </div>
-        </div>
+        </form>
     );
 }
