@@ -45,7 +45,7 @@ export default function FeedbackPage() {
                   <Star
                     className={`h-8 w-8 ${
                       (hoverRating || rating) >= star
-                        ? "text-yellow-400"
+                        ? "text-yellow-400 transform transition duration-200 hover:scale-110"
                         : "text-gray-300"
                     }`}
                   />

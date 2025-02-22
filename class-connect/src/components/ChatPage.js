@@ -43,7 +43,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen overflow-y-auto">
       {/* On small screens: Tutors list on top */}
       <div className="md:hidden border-b p-4">
         <h2 className="text-xl font-bold mb-2">Tutors</h2>
@@ -94,12 +94,17 @@ export default function ChatPage() {
           {/* Messages Container */}
           <div className="flex-1 overflow-y-auto bg-gray-50 p-4 space-y-3 pb-24">
             {messages.map((msg) => (
-              <div key={msg.id} className="flex w-full">
+              <div
+                key={msg.id}
+                className={`flex ${
+                  msg.sender === "student" ? "justify-end" : "justify-start"
+                }`}
+              >
                 <div
-                  className={`p-3 rounded-xl shadow-md w-full max-w-full ${
+                  className={`p-3 rounded-xl shadow-md max-w-[70%] ${
                     msg.sender === "student"
-                      ? "bg-blue-200 text-right rounded-br-none"
-                      : "bg-green-500 text-left rounded-bl-none"
+                      ? "bg-indigo-200 text-right"
+                      : "bg-indigo-400 text-left"
                   }`}
                 >
                   {msg.text}
