@@ -4,7 +4,8 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import FeatureCard from "@/components/FeatureCard";
 import AnimatedContactForm from "@/components/AnimatedContactForm";
-import { Calendar, MessageCircle, CreditCard, BookOpen, ArrowUp } from "lucide-react";
+import AjaxContent from "@/components/AjaxContent";
+import { Calendar, MessageCircle, CreditCard, BookOpen } from "lucide-react";
 
 export default function Home() {
   return (
@@ -33,19 +34,16 @@ export default function Home() {
           title="Easy Scheduling"
           description="Book appointments with your preferred tutors at your convenience."
         />
-
         <FeatureCard 
           icon={<MessageCircle aria-hidden="true" className="h-12 w-12 text-blue-500" />}
           title="Direct Communication"
           description="Chat directly with tutors to discuss your learning needs."
         />
-
         <FeatureCard
           icon={<CreditCard aria-hidden="true" className="h-12 w-12 text-blue-500" />}
           title="Secure Payments"
           description="Process payments safely and easily through our integrated system."
         />
-
         <FeatureCard
           icon={<BookOpen aria-hidden="true" className="h-12 w-12 text-blue-500" />}
           title="Learning Resources"
@@ -78,9 +76,6 @@ export default function Home() {
         <p className="text-lg text-gray-700 mt-4 text-center">
           ClassConnect is designed to revolutionize the tutoring experience by bringing together students and tutors in a seamless, all-in-one platform. With our intuitive interface, users can easily schedule appointments, manage payments, and communicate in real time—all while accessing a variety of learning resources.
         </p>
-        <p className="text-lg text-gray-700 mt-4 text-center">
-          Our mission is to eliminate the hassles of traditional tutoring setups by offering a streamlined solution that saves time and enhances educational outcomes.
-        </p>
       </div>
 
       {/* Services Section */}
@@ -90,21 +85,11 @@ export default function Home() {
           ClassConnect provides a comprehensive suite of services, including:
         </p>
         <ul className="list-disc list-inside text-lg text-gray-700 mt-4 max-w-2xl mx-auto">
-          <li>
-            <strong>Easy Scheduling:</strong> An interactive calendar that lets you book, reschedule, and cancel appointments at your convenience.
-          </li>
-          <li>
-            <strong>Direct Communication:</strong> A built-in real-time chat system that facilitates instant, effective communication between tutors and students.
-          </li>
-          <li>
-            <strong>Secure Payments:</strong> A robust, encrypted payment system ensuring that all transactions are safe and reliable.
-          </li>
-          <li>
-            <strong>Learning Resources:</strong> Access to curated materials and practice exercises to complement your tutoring sessions.
-          </li>
-          <li>
-            <strong>Automated Reminders:</strong> Receive timely notifications for upcoming appointments and payment deadlines.
-          </li>
+          <li><strong>Easy Scheduling:</strong> An interactive calendar that lets you book, reschedule, and cancel appointments at your convenience.</li>
+          <li><strong>Direct Communication:</strong> A built-in real-time chat system that facilitates instant, effective communication between tutors and students.</li>
+          <li><strong>Secure Payments:</strong> A robust, encrypted payment system ensuring that all transactions are safe and reliable.</li>
+          <li><strong>Learning Resources:</strong> Access to curated materials and practice exercises to complement your tutoring sessions.</li>
+          <li><strong>Automated Reminders:</strong> Receive timely notifications for upcoming appointments and payment deadlines.</li>
         </ul>
       </div>
 
@@ -154,6 +139,11 @@ export default function Home() {
         <div className="mt-8 max-w-md mx-auto">
           <AnimatedContactForm />
         </div>
+      </div>
+
+      {/* AJAX-loaded content */}
+      <div className="my-16">
+        <AjaxContent />
       </div>
     </div>
   );
