@@ -2,7 +2,7 @@
 
 export default function ResourcesPage() {
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow rounded p-6">
+    <div className="h-[calc(100vh-200px)] overflow-y-auto max-w-4xl mx-auto bg-white shadow rounded p-6">
       {/* Page Header */}
       <div className="border-b pb-4 mb-6">
         <h2 className="text-2xl font-bold">Supplementary Resources</h2>

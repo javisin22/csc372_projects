@@ -2,7 +2,7 @@
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
+import CheckoutForm from "../CheckoutForm";
 
 // Load the Stripe.js library using the publishable key (allowing me to securely 
 // work with Stripe on the client side without exposing my secret key)

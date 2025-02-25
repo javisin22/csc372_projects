@@ -18,7 +18,7 @@ export default function FeedbackPage() {
   };
 
   return (
-    <div className="bg-white shadow rounded max-w-2xl mx-auto p-6">
+    <div className="h-[calc(100vh-200px)] max-w-2xl mx-auto overflow-y-auto bg-white shadow rounded p-6">
       <div className="p-4 border-b">
         {/* <h3 className="text-xl font-semibold">Feedback</h3> */}
         <p className="text-gray-600">

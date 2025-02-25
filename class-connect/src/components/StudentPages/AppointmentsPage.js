@@ -41,7 +41,7 @@ export default function AppointmentsPage() {
           Below are your upcoming booked classes.
         </p>
       </div>
-      <div className="max-h-[550px] overflow-y-auto overflow-x-hidden pb-10">
+      <div className="h-[calc(100vh-200px)] overflow-y-auto overflow-x-hidden pb-10">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {appointments.map((appt) => (
             <div

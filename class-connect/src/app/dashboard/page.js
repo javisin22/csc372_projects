@@ -15,20 +15,31 @@ import {
   ArrowRightToLine,
 } from "lucide-react";
 
-// Dedicated pages
-import DashboardPage from "@/components/DashboardPage";
-import CalendarPage from "@/components/CalendarPage";
-import AppointmentsPage from "@/components/AppointmentsPage";
-import PaymentPage from "@/components/PaymentPage";
-import ChatPage from "@/components/ChatPage";
-import ProfilePage from "@/components/ProfilePage";
-import FeedbackPage from "@/components/FeedbackPage";
-import ResourcesPage from "@/components/ResourcesPage";
+// Dedicated pages for Student view
+import DashboardPageStudent from "@/components/StudentPages/DashboardPage";
+import CalendarPageStudent from "@/components/StudentPages/CalendarPage";
+import AppointmentsPageStudent from "@/components/StudentPages/AppointmentsPage";
+import PaymentPageStudent from "@/components/StudentPages/PaymentPage";
+import ChatPageStudent from "@/components/StudentPages/ChatPage";
+import ProfilePageStudent from "@/components/StudentPages/ProfilePage";
+import FeedbackPageStudent from "@/components/StudentPages/FeedbackPage";
+import ResourcesPageStudent from "@/components/StudentPages/ResourcesPage";
 import SupportPage from "@/components/SupportPage";
+
+// Dedicated pages for Tutor view
+import DashboardPageTutor from "@/components/TutorPages/DashboardPage";
+import CalendarPageTutor from "@/components/TutorPages/CalendarPage";
+import AppointmentsPageTutor from "@/components/TutorPages/AppointmentsPage";
+import PaymentPageTutor from "@/components/TutorPages/PaymentPage";
+import ChatPageTutor from "@/components/TutorPages/ChatPage";
+import ProfilePageTutor from "@/components/TutorPages/ProfilePage";
+import FeedbackPageTutor from "@/components/TutorPages/FeedbackPage";
+import ResourcesPageTutor from "@/components/TutorPages/ResourcesPage";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Dashboard");
   const [sidebarActive, setSidebarActive] = useState(true);
+  const [userType, setUserType] = useState("tutor");
 
   const menuItems = [
     { name: "Dashboard", icon: <Bell className="mr-2 h-4 w-4" /> },
@@ -42,15 +53,27 @@ export default function Dashboard() {
     { name: "Support", icon: <HelpCircle className="mr-2 h-4 w-4" /> },
   ];
 
-  const pageComponents = {
-    Dashboard: <DashboardPage setActivePage={setActivePage} />,
-    Calendar: <CalendarPage sidebarActive={sidebarActive} />,
-    Appointments: <AppointmentsPage />,
-    Payment: <PaymentPage />,
-    Chat: <ChatPage />,
-    Profile: <ProfilePage />,
-    Feedback: <FeedbackPage />,
-    Resources: <ResourcesPage />,
+  const pageComponentsStudent = {
+    Dashboard: <DashboardPageStudent setActivePage={setActivePage} />,
+    Calendar: <CalendarPageStudent sidebarActive={sidebarActive} />,
+    Appointments: <AppointmentsPageStudent />,
+    Payment: <PaymentPageStudent />,
+    Chat: <ChatPageStudent />,
+    Profile: <ProfilePageStudent />,
+    Feedback: <FeedbackPageStudent />,
+    Resources: <ResourcesPageStudent />,
+    Support: <SupportPage />,
+  };
+
+  const pageComponentsTutor = {
+    Dashboard: <DashboardPageTutor setActivePage={setActivePage} />,
+    Calendar: <CalendarPageTutor sidebarActive={sidebarActive} />,
+    Appointments: <AppointmentsPageTutor />,
+    Payment: <PaymentPageTutor />,
+    Chat: <ChatPageTutor />,
+    Profile: <ProfilePageTutor />,
+    Feedback: <FeedbackPageTutor />,
+    Resources: <ResourcesPageTutor />,
     Support: <SupportPage />,
   };
 
@@ -128,7 +151,13 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {pageComponents[activePage] || null}
+        {/* Render the active page component */}
+        {/* {pageComponentsStudent[activePage]} */}
+
+        {userType === "student"
+          ? pageComponentsStudent[activePage]
+          : pageComponentsTutor[activePage]}
+
       </main>
     </div>
   );

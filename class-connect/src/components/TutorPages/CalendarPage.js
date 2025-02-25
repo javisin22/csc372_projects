@@ -5,22 +5,25 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useState, useRef, useEffect } from "react";
-import AppointmentModal from "./AppointmentModal";
-import DeleteModal from "./DeleteModal";
+import AvailabilityModal from "../AvailabilityModal";
+import DeleteModal from "../DeleteModal";
+
+// 🎃 See how to do the blocking time slots. Now I have: "clickInfo.event.extendedProps.type === "booked"
+// but I must learn how to create events with "booked" status.
 
 export default function CalendarPage() {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]); // holds both availability and booked sessions
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null); // "create", "edit", "delete"
   const [selectedRange, setSelectedRange] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [currentView, setCurrentView] = useState("timeGridWeek");
 
-  // Create refs for container and calendar instance
+  // Refs for container and calendar instance
   const containerRef = useRef(null);
   const calendarRef = useRef(null);
 
-  // Use a ResizeObserver to trigger a resize on the calendar when container changes
+  // ResizeObserver to update calendar size when container changes
   useEffect(() => {
     if (!containerRef.current || !calendarRef.current) return;
     const observer = new ResizeObserver(() => {
@@ -30,19 +33,18 @@ export default function CalendarPage() {
     return () => observer.disconnect();
   }, []);
 
-  // Window resize handler for adjusting current view
+  // Adjust calendar view and styling based on window width
   useEffect(() => {
     const handleResize = () => {
       const fcHeaderToolbar = window.jQuery(".fc-header-toolbar");
       if (window.innerWidth < 768) {
         setCurrentView("timeGridDay");
-        // set the padding for "main" to 0 using jQuery
         if (window.jQuery) {
           window.jQuery("main").css("padding", "0");
           window.jQuery("#page-header").css("padding", "32px");
           fcHeaderToolbar.css("padding", "0.5rem 0.75rem");
-          fcHeaderToolbar.css("font-size", "0.875rem");          
-        }        
+          fcHeaderToolbar.css("font-size", "0.875rem");
+        }
       } else {
         setCurrentView("timeGridWeek");
         if (window.jQuery) {
@@ -53,50 +55,61 @@ export default function CalendarPage() {
         }
       }
     };
-    handleResize(); // Initial check
+    handleResize(); // initial check
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // When currentView state changes, update the calendar view using the API
+  // Update the FullCalendar view when currentView changes
   useEffect(() => {
     if (calendarRef.current) {
       calendarRef.current.getApi().changeView(currentView);
     }
   }, [currentView]);
 
-  // When a date range is selected, open the modal to create a new event
+  // When a date range is selected, open modal to create a new availability slot
   const handleSelect = (selectInfo) => {
     setSelectedRange(selectInfo);
     setModalType("create");
     setModalOpen(true);
   };
 
-  // Left-click: open modal for editing event title
+  // Left-click on an event:
+  // - For availability slots, allow editing.
+  // - For booked sessions (with extendedProps.type === "booked"), prevent editing.
   const handleEventClick = (clickInfo) => {
-    setSelectedEvent(clickInfo.event);
-    setModalType("edit");
-    setModalOpen(true);
+    if (clickInfo.event.extendedProps.type === "booked") {
+      // For booked sessions, you might show details rather than allow edits.
+      alert("This session is booked and cannot be edited.");
+    } else {
+      setSelectedEvent(clickInfo.event);
+      setModalType("edit");
+      setModalOpen(true);
+    }
   };
 
-  // Right-click: open modal for deletion confirmation
+  // Right-click on an event for deletion (only for availability slots)
   const handleEventDidMount = (info) => {
     info.el.addEventListener("contextmenu", (e) => {
       e.preventDefault();
-      setSelectedEvent(info.event);
-      setModalType("delete");
-      setModalOpen(true);
+      if (info.event.extendedProps.type !== "booked") {
+        setSelectedEvent(info.event);
+        setModalType("delete");
+        setModalOpen(true);
+      }
     });
   };
 
-  // Handler for the create/edit modal confirmation
+  // Handle confirmation from the create/edit modal
   const handleModalConfirm = (title) => {
     if (modalType === "create" && selectedRange) {
+      // Create a new availability slot (note the added "type" property)
       const newEvent = {
         id: Date.now().toString(),
         title,
         start: selectedRange.start,
         end: selectedRange.end,
+        extendedProps: { type: "availability" },
       };
       setEvents([...events, newEvent]);
     } else if (modalType === "edit" && selectedEvent) {
@@ -110,7 +123,7 @@ export default function CalendarPage() {
     closeModal();
   };
 
-  // Handler for deletion confirmation modal
+  // Handle deletion confirmation
   const handleDeleteConfirm = () => {
     if (selectedEvent) {
       setEvents((prevEvents) =>
@@ -120,6 +133,7 @@ export default function CalendarPage() {
     closeModal();
   };
 
+  // Update event when its time is resized
   const handleEventResize = (resizeInfo) => {
     const resizedEvent = resizeInfo.event;
     setEvents((prevEvents) =>
@@ -161,12 +175,13 @@ export default function CalendarPage() {
         }}
       />
       {modalOpen && (modalType === "create" || modalType === "edit") && (
-        <AppointmentModal
+        <AvailabilityModal
           initialTitle={
             modalType === "edit" && selectedEvent ? selectedEvent.title : ""
           }
           onClose={closeModal}
           onConfirm={handleModalConfirm}
+          mode={modalType}
         />
       )}
       {modalOpen && modalType === "delete" && (
