@@ -39,7 +39,7 @@ import ResourcesPageTutor from "@/components/TutorPages/ResourcesPage";
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Dashboard");
   const [sidebarActive, setSidebarActive] = useState(true);
-  const [userType, setUserType] = useState("tutor");
+  const [userType, setUserType] = useState("student"); // "student" || "tutor"
 
   const menuItems = [
     { name: "Dashboard", icon: <Bell className="mr-2 h-4 w-4" /> },
@@ -76,6 +76,12 @@ export default function Dashboard() {
     Resources: <ResourcesPageTutor />,
     Support: <SupportPage />,
   };
+
+  // Fetch user type from the server and set it to the state
+  // useEffect(() => {
+  //   // Fetch user type from the server
+  //   setUserType(res); // res--> "student" || "tutor"
+  // }, []);
 
   // Hide body scrollbar when Dashboard mounts
   useEffect(() => {
