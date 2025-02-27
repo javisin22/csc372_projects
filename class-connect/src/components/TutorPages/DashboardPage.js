@@ -59,7 +59,7 @@ export default function TutorDashboardPage({ setActivePage }) {
         </div>
 
         {/* Calendar Preview Card */}
-        <div className="bg-white shadow rounded md:col-span-2">
+        <div className="bg-white shadow rounded md:col-span-3">
           <div className="p-4 border-b">
             <h3 className="text-xl font-semibold">Calendar Overview</h3>
             <p className="text-gray-600">
