@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 
-
-export default function AppointmentModal({ initialTitle, onClose, onConfirm }) {
+export default function AppointmentModal({ initialTitle = "", initialDescription = "", onClose, onConfirm }) {
   const [title, setTitle] = useState(initialTitle || "");
+  const [description, setDescription] = useState(initialDescription || "");
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function AppointmentModal({ initialTitle, onClose, onConfirm }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onConfirm(title);
+    onConfirm(title, description);
   };
 
   return (
@@ -37,11 +37,28 @@ export default function AppointmentModal({ initialTitle, onClose, onConfirm }) {
             onChange={(e) => setTitle(e.target.value)}
             className="w-full border rounded px-3 py-2 mb-4 focus:outline-none focus:ring focus:border-blue-300"
           />
+          
+          <label
+            htmlFor="appointment-description"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Description (optional)
+          </label>
+          <textarea
+            id="appointment-description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full border rounded px-3 py-2 mb-4 focus:outline-none focus:ring focus:border-blue-300"
+            rows={3}
+            placeholder="Add details about this appointment"
+          />
+          
           <div className="flex justify-end space-x-4">
             <button
               type="button"
               onClick={() => {
                 setTitle("");
+                setDescription("");
                 onClose();
               }}
               className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 focus:outline-none focus:ring"

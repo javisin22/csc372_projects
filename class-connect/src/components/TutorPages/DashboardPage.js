@@ -67,7 +67,7 @@ export default function TutorDashboardPage({ setActivePage }) {
             </p>
           </div>
           <div className="p-4">
-            <CalendarPreview onClick={() => setActivePage("Calendar")} />
+            <CalendarPreview onClick={() => setActivePage("Calendar")} userType="tutor" />
           </div>
         </div>
       </div>

@@ -8,9 +8,6 @@ import { useState, useRef, useEffect } from "react";
 import AvailabilityModal from "../AvailabilityModal";
 import DeleteModal from "../DeleteModal";
 
-// 🎃 See how to do the blocking time slots. Now I have: "clickInfo.event.extendedProps.type === "booked"
-// but I must learn how to create events with "booked" status.
-
 export default function CalendarPage() {
   const [events, setEvents] = useState([]); // holds both availability and booked sessions
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,10 +15,50 @@ export default function CalendarPage() {
   const [selectedRange, setSelectedRange] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [currentView, setCurrentView] = useState("timeGridWeek");
+  
+  // Track initial load state to prevent double-loading from localStorage during StrictMode
+  const initialLoadDone = useRef(false);
 
   // Refs for container and calendar instance
   const containerRef = useRef(null);
   const calendarRef = useRef(null);
+  
+  // Load events from localStorage on component mount
+  useEffect(() => {
+    if (!initialLoadDone.current) {
+      const savedEvents = localStorage.getItem('tutorAvailability');
+      if (savedEvents) {
+        try {
+          // Parse saved events and convert date strings back to Date objects
+          const parsedEvents = JSON.parse(savedEvents).map(evt => ({
+            ...evt,
+            start: new Date(evt.start),
+            end: new Date(evt.end)
+          }));
+          console.log('Tutor availability loaded:', parsedEvents);
+          setEvents(parsedEvents);
+        } catch (error) {
+          console.error('Error parsing saved availability:', error);
+        }
+      }
+      initialLoadDone.current = true;
+    }
+  }, []);
+
+  // Save events to localStorage whenever they change
+  useEffect(() => {
+    if (initialLoadDone.current && events.length > 0) {
+      // Convert Date objects to ISO strings before storing
+      const eventsToStore = events.map(evt => ({
+        ...evt,
+        start: evt.start instanceof Date ? evt.start.toISOString() : evt.start,
+        end: evt.end instanceof Date ? evt.end.toISOString() : evt.end
+      }));
+      
+      console.log('Saving tutor availability:', eventsToStore);
+      localStorage.setItem('tutorAvailability', JSON.stringify(eventsToStore));
+    }
+  }, [events]);
 
   // ResizeObserver to update calendar size when container changes
   useEffect(() => {
@@ -90,6 +127,15 @@ export default function CalendarPage() {
 
   // Right-click on an event for deletion (only for availability slots)
   const handleEventDidMount = (info) => {
+    // Add tooltip for description if it exists
+    if (info.event.extendedProps?.description) {
+      const title = info.event.title;
+      const description = info.event.extendedProps.description;
+      
+      // Use browser's native title attribute for simple tooltip
+      info.el.setAttribute('title', `${title}\n\n${description}`);
+    }
+    
     info.el.addEventListener("contextmenu", (e) => {
       e.preventDefault();
       if (info.event.extendedProps.type !== "booked") {
@@ -101,22 +147,37 @@ export default function CalendarPage() {
   };
 
   // Handle confirmation from the create/edit modal
-  const handleModalConfirm = (title) => {
+  const handleModalConfirm = (title, description) => {
     if (modalType === "create" && selectedRange) {
       // Create a new availability slot (note the added "type" property)
       const newEvent = {
         id: Date.now().toString(),
         title,
+        description,
         start: selectedRange.start,
         end: selectedRange.end,
-        extendedProps: { type: "availability" },
+        extendedProps: { 
+          type: "availability",
+          description 
+        },
       };
       setEvents([...events, newEvent]);
     } else if (modalType === "edit" && selectedEvent) {
+      // Update the event title and description
       selectedEvent.setProp("title", title);
+      selectedEvent.setExtendedProp("description", description);
+      
       setEvents((prevEvents) =>
         prevEvents.map((evt) =>
-          evt.id === selectedEvent.id ? { ...evt, title } : evt
+          evt.id === selectedEvent.id ? { 
+            ...evt, 
+            title,
+            description,
+            extendedProps: { 
+              ...evt.extendedProps,
+              description 
+            } 
+          } : evt
         )
       );
     }
@@ -173,11 +234,19 @@ export default function CalendarPage() {
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
+        eventClassNames={(arg) => {
+          // Add different classes based on event type
+          return arg.event.extendedProps.type === "booked" ? "booked-event" : "availability-event";
+        }}
       />
       {modalOpen && (modalType === "create" || modalType === "edit") && (
         <AvailabilityModal
           initialTitle={
             modalType === "edit" && selectedEvent ? selectedEvent.title : ""
+          }
+          initialDescription={
+            modalType === "edit" && selectedEvent ? 
+              selectedEvent.extendedProps?.description || "" : ""
           }
           onClose={closeModal}
           onConfirm={handleModalConfirm}

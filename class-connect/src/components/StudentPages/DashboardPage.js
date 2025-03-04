@@ -44,7 +44,7 @@ export default function DashboardPage({ setActivePage }) {
             <p className="text-gray-600">Click to see full calendar and book appointments</p>
           </div>
           <div className="p-4">
-            <CalendarPreview onClick={() => setActivePage("Calendar")} />
+            <CalendarPreview onClick={() => setActivePage("Calendar")} userType="student"/>
           </div>
         </div>
 

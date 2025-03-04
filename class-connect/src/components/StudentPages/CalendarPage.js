@@ -16,9 +16,50 @@ export default function CalendarPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [currentView, setCurrentView] = useState("timeGridWeek");
 
+  // Track the initial load state to prevent double-loading from localStorage during StrictMode's double mount
+  const initialLoadDone = useRef(false); 
+
   // Create refs for container and calendar instance
   const containerRef = useRef(null);
   const calendarRef = useRef(null);
+
+  // Load events from localStorage on component mount
+  useEffect(() => {
+    if (!initialLoadDone.current) { 
+      const savedEvents = localStorage.getItem('calendarEvents');
+      if (savedEvents) {
+        try {
+          // Parse saved events and convert date strings back to Date objects
+          const parsedEvents = JSON.parse(savedEvents).map(evt => ({
+            ...evt,
+            start: new Date(evt.start),
+            end: new Date(evt.end)
+          }));
+          console.log('Parsed events:', parsedEvents);
+          setEvents(parsedEvents);
+        } catch (error) {
+          console.error('Error parsing saved events:', error);
+        }
+      }
+      initialLoadDone.current = true
+    }
+  }, []);
+
+  // Save events to localStorage whenever they change
+  useEffect(() => {
+    // Skip saving on initial render when events is empty
+    if (initialLoadDone.current && events.length > 0) {
+      // Convert Date objects to ISO strings before storing
+      const eventsToStore = events.map(evt => ({
+        ...evt,
+        start: evt.start instanceof Date ? evt.start.toISOString() : evt.start,
+        end: evt.end instanceof Date ? evt.end.toISOString() : evt.end
+      }));
+      
+      console.log('Saving events to localStorage:', eventsToStore);
+      localStorage.setItem('calendarEvents', JSON.stringify(eventsToStore));
+    }
+  }, [events]);
 
   // Use a ResizeObserver to trigger a resize on the calendar when container changes
   useEffect(() => {
@@ -81,6 +122,15 @@ export default function CalendarPage() {
 
   // Right-click: open modal for deletion confirmation
   const handleEventDidMount = (info) => {
+    // Add tooltip for description if it exists
+    if (info.event.extendedProps?.description) {
+      const title = info.event.title;
+      const description = info.event.extendedProps.description;
+      
+      // Use browser's native title attribute for simple tooltip
+      info.el.setAttribute('title', `${title}\n\n${description}`);
+    }
+    
     info.el.addEventListener("contextmenu", (e) => {
       e.preventDefault();
       setSelectedEvent(info.event);
@@ -90,22 +140,36 @@ export default function CalendarPage() {
   };
 
   // Handler for the create/edit modal confirmation
-  const handleModalConfirm = (title) => {
+  const handleModalConfirm = (title, description) => {
     if (modalType === "create" && selectedRange) {
       const newEvent = {
         id: Date.now().toString(),
         title,
+        description, // Store description in the event object
         start: selectedRange.start,
         end: selectedRange.end,
+        extendedProps: { description } // Also include in extendedProps for FullCalendar
       };
       setEvents([...events, newEvent]);
     } else if (modalType === "edit" && selectedEvent) {
-      selectedEvent.setProp("title", title);
+      // Update the event in our state
       setEvents((prevEvents) =>
         prevEvents.map((evt) =>
-          evt.id === selectedEvent.id ? { ...evt, title } : evt
+          evt.id === selectedEvent.id 
+            ? { 
+                ...evt, 
+                title, 
+                description,
+                extendedProps: { ...evt.extendedProps, description }
+              } 
+            : evt
         )
       );
+      
+      // Update the FullCalendar event
+      selectedEvent.setProp("title", title);
+      // Update extendedProps for description
+      selectedEvent.setExtendedProp("description", description);
     }
     closeModal();
   };
@@ -125,7 +189,11 @@ export default function CalendarPage() {
     setEvents((prevEvents) =>
       prevEvents.map((evt) =>
         evt.id === resizedEvent.id
-          ? { ...evt, start: resizedEvent.start, end: resizedEvent.end }
+          ? { 
+              ...evt, 
+              start: resizedEvent.start, 
+              end: resizedEvent.end 
+            }
           : evt
       )
     );
@@ -164,6 +232,10 @@ export default function CalendarPage() {
         <AppointmentModal
           initialTitle={
             modalType === "edit" && selectedEvent ? selectedEvent.title : ""
+          }
+          initialDescription={
+            modalType === "edit" && selectedEvent ? 
+              selectedEvent.extendedProps?.description || "" : ""
           }
           onClose={closeModal}
           onConfirm={handleModalConfirm}
