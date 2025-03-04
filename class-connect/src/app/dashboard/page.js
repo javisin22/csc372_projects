@@ -39,8 +39,8 @@ import ResourcesPageTutor from "@/components/TutorPages/ResourcesPage";
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Dashboard");
   const [sidebarActive, setSidebarActive] = useState(true);
-  // const [userType, setUserType] = useState("student"); // "student" || "tutor"
-  const [userType, setUserType] = useState("tutor"); // "student" || "tutor"
+  const [userType, setUserType] = useState("student"); // "student" || "tutor"
+  // const [userType, setUserType] = useState("tutor"); // "student" || "tutor"
 
   const menuItems = [
     { name: "Dashboard", icon: <Bell className="mr-2 h-4 w-4" /> },
