@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import Button from "./Button";
 import { usePathname } from "next/navigation";
 
@@ -13,10 +14,13 @@ export default function Header() {
       <header className="px-4 pb-4">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center">
-            <img
-              src="logo_ClassConnect_transparent.webp"
+            <Image
+              src="/logo_ClassConnect_transparent.webp"
               alt="ClassConnect Logo"
-              className="w-48 h-auto max-w-full object-contain"
+              width={192}
+              height={192}
+              priority
+              className="max-w-full object-contain"
             />
           </div>
           <nav className="mt-4 md:mt-0 text-lg text-gray-600">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Calendar,
   MessageCircle,
@@ -106,10 +107,13 @@ export default function Dashboard() {
       >
         <Link href="/" className="p-4 border-b">
           <div className="flex items-center">
-            <img
-              src="logo_ClassConnect_transparent.png"
+            <Image
+              src="/logo_ClassConnect_transparent.webp"
               alt="ClassConnect Logo"
-              className="w-32 h-auto rounded-full mr-3"
+              width={128}
+              height={128}
+              priority
+              className="rounded-full mr-3"
             />
             <p className="font-semibold text-lg">ClassConnect</p>
           </div>

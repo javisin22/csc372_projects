@@ -23,7 +23,7 @@ export default function Home() {
       {/* Get Started Button */}
       <div className="flex justify-center my-8">
         <Button>
-          <Link href="/signup">Get Started</Link>
+          <Link href="auth?activeTab=signup">Get Started</Link>
         </Button>
       </div>
 
