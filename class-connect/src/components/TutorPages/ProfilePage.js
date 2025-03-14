@@ -88,6 +88,7 @@ export default function ProfilePage() {
                             Preferred Payment Schedule
                         </label>
                         <select className="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                            <option>Daily</option>
                             <option>Weekly</option>
                             <option>Biweekly</option>
                             <option>Monthly</option>
