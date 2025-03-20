@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services>
+  <service>
+    <title>Personalized Tutoring</title>
+    <description>One-on-one sessions tailored to each student's needs.</description>
+  </service>
+  <service>
+    <title>Group Classes</title>
+    <description>Collaborative learning sessions with peer interaction.</description>
+  </service>
+  <service>
+    <title>Online Resources</title>
+    <description>Access to guides, videos, and quizzes to supplement your learning.</description>
+  </service>
+</services>
