@@ -1,0 +1,77 @@
+<!-- index.handlebars -->
+{{!-- Set a title for the page --}}
+{{!< main}}
+{{!-- In Next.js static export we’d render this via Handlebars now --}}
+<div class="content">
+  <!-- Main Intro Section -->
+  <div class="text-center my-8">
+    <h1 class="text-4xl font-extrabold">Streamline Your Tutoring Experience</h1>
+    <p class="text-xl text-gray-700 mt-4">
+      Book appointments, manage payments, and connect with tutors effortlessly.
+    </p>
+  </div>
+
+  <!-- Get Started Button -->
+  <div class="flex justify-center my-8">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      <a href="/signup">Get Started</a>
+    </button>
+  </div>
+
+  <!-- Feature Section -->
+  <div class="grid mt-12 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+    <div class="feature-card">
+      <img src="/images/calendar.webp" alt="Calendar icon" width="150" height="150">
+      <h3>Easy Scheduling</h3>
+      <p>Book appointments with your preferred tutors at your convenience.</p>
+    </div>
+    <div class="feature-card">
+      <img src="/images/chat_bubble.png" alt="Chat Bubble icon" width="100" height="100">
+      <h3>Direct Communication</h3>
+      <p>Chat directly with tutors to discuss your learning needs.</p>
+    </div>
+    <div class="feature-card">
+      <img src="/images/credit_card.webp" alt="Credit Card icon" width="150" height="150">
+      <h3>Secure Payments</h3>
+      <p>Process payments safely and easily through our integrated system.</p>
+    </div>
+    <div class="feature-card">
+      <img src="/images/open_book.png" alt="Open Book icon" width="100" height="100">
+      <h3>Learning Resources</h3>
+      <p>Access supplementary materials to enhance your learning experience.</p>
+    </div>
+  </div>
+
+  <!-- Call-to-Action Section -->
+  <div class="text-center my-12">
+    <h2 class="text-3xl font-bold">Ready to Transform Your Learning Journey?</h2>
+    <p class="text-xl text-gray-700 mt-4">
+      Join ClassConnect today and experience a new way of tutoring.
+    </p>
+  </div>
+
+  <div class="flex justify-center my-8 space-x-4">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      <a href="/auth?activeTab=login">Learn More</a>
+    </button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      <a href="/auth?activeTab=signup">Sign Up Now</a>
+    </button>
+  </div>
+
+  <!-- About Section (scrolling target) -->
+  <div id="about" class="my-16 bg-white p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold text-center">About</h2>
+    <p class="text-lg text-gray-700 mt-4 text-center">
+      ClassConnect is designed to revolutionize the tutoring experience by bringing together students and tutors in a seamless, all-in-one platform. With our intuitive interface, users can easily schedule appointments, manage payments, and communicate in real time—all while accessing a variety of learning resources.
+    </p>
+  </div>
+
+  <!-- Contact Section (scrolling target) -->
+  <div id="contact" class="my-16 bg-white p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold text-center">Contact</h2>
+    <p class="text-xl text-gray-700 mt-4 text-center">
+      Have questions or need support? Get in touch with us for more information about our tutoring services.
+    </p>
+  </div>
+</div>
