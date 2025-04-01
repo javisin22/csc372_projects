@@ -5,11 +5,23 @@ import Button from "@/components/Button";
 import FeatureCard from "@/components/FeatureCard";
 import AnimatedContactForm from "@/components/AnimatedContactForm";
 import AjaxContent from "@/components/AjaxContent";
-import { Calendar, MessageCircle, CreditCard, BookOpen } from "lucide-react";
+import { Calendar, MessageCircle, CreditCard, BookOpen, ExternalLink } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="overflow-y-auto">
+      {/* External PHP Application Link */}
+      <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
+        <a 
+          href="https://javiersinpelayo.rhody.dev/csc372_projects/client_site/appointments.php"
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
+        >
+          Access the PHP Appointments class page <ExternalLink className="h-4 w-4" />
+        </a>
+      </div>
+
       {/* Main Intro Section */}
       <div className="text-center my-8">
         <h1 className="text-4xl font-extrabold">
