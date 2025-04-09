@@ -22,6 +22,19 @@ export default function Home() {
         </a>
       </div>
 
+      {/* External PHP Form, Cookies & Session Link */}
+      <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
+        <a 
+          href="https://javiersinpelayo.rhody.dev/csc372_projects/client_site/index.php"
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
+        >
+          Access the PHP Form page <ExternalLink className="h-4 w-4" />
+        </a>
+      </div>
+
+      
       {/* Main Intro Section */}
       <div className="text-center my-8">
         <h1 className="text-4xl font-extrabold">
