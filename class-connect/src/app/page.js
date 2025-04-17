@@ -10,6 +10,18 @@ import { Calendar, MessageCircle, CreditCard, BookOpen, ExternalLink } from "luc
 export default function Home() {
   return (
     <div className="overflow-y-auto">
+      {/* External PHP Database Connection Link */}
+      <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
+        <a 
+          href="https://javiersinpelayo.rhody.dev/csc372_projects/client_site/data.php"
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
+        >
+          Access the PHP Database connection page <ExternalLink className="h-4 w-4" />
+        </a>
+      </div>
+
       {/* External PHP Application Link */}
       <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
         <a 
