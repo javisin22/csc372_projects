@@ -181,6 +181,8 @@ try {
 <head>
     <title>ClassConnect - Appointments Manager</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" lang="en">
     <style>
         .appointment-list, .users-list, .form-container {
             margin: 20px 0;
