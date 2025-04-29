@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="overflow-y-auto">
       {/* External PHP Database Connection Link */}
-      <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
+      {/* <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
         <a 
           href="https://javiersinpelayo.rhody.dev/csc372_projects/client_site/data.php"
           target="_blank" 
@@ -20,10 +20,10 @@ export default function Home() {
         >
           Access the PHP Database connection page <ExternalLink className="h-4 w-4" />
         </a>
-      </div>
+      </div> */}
 
       {/* External PHP Application Link */}
-      <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
+      {/* <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
         <a 
           href="https://javiersinpelayo.rhody.dev/csc372_projects/client_site/appointments.php"
           target="_blank" 
@@ -32,10 +32,10 @@ export default function Home() {
         >
           Access the PHP Appointments class page <ExternalLink className="h-4 w-4" />
         </a>
-      </div>
+      </div> */}
 
       {/* External PHP Form, Cookies & Session Link */}
-      <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
+      {/* <div className="bg-blue-50 p-3 text-center mb-4 rounded-md">
         <a 
           href="https://javiersinpelayo.rhody.dev/csc372_projects/client_site/index.php"
           target="_blank" 
@@ -44,7 +44,7 @@ export default function Home() {
         >
           Access the PHP Form page <ExternalLink className="h-4 w-4" />
         </a>
-      </div>
+      </div> */}
 
       
       {/* Main Intro Section */}
